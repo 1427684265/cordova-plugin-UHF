@@ -12,6 +12,18 @@
       </feature>
     </config-file>
     <config-file parent="/*" target="AndroidManifest.xml"/>
+    <!--  -->
+    <source-file src="src/android/libs/SerialPort.jar" target-dir="app/libs/SerialPort.jar"/>
+    <source-file src="src/android/libs/uhfcom13_v14.jar" target-dir="app/libs/uhfcom13_v14.jar"/>
+    <!--  -->
+    <source-file src="src/android/jniLibs/armeabi/libdevapi.so" target-dir="src/main/jniLibs/armeabi/libdevapi.so"/>
+    <source-file src="src/android/jniLibs/armeabi/libirdaSerialPort.so" target-dir="src/main/jniLibs/armeabi/libirdaSerialPort.so"/>
+    <source-file src="src/android/jniLibs/armeabi/libuhf.so" target-dir="src/main/jniLibs/armeabi/libuhf.so"/>
+    <!--  -->
+    <source-file src="src/android/jniLibs/armeabi-v7a/libdevapi.so" target-dir="src/main/jniLibs/armeabi-v7a/libdevapi.so"/>
+    <source-file src="src/android/jniLibs/armeabi-v7a/libirdaSerialPort.so" target-dir="src/main/jniLibs/armeabi-v7a/libirdaSerialPort.so"/>
+    <source-file src="src/android/jniLibs/armeabi-v7a/libuhf.so" target-dir="src/main/jniLibs/armeabi-v7a/libuhf.so"/>
+    <!--  -->
     <source-file src="src/android/UHF.java" target-dir="src/cordova/plugin/UHF/UHF"/>
   </platform>
 </plugin>
