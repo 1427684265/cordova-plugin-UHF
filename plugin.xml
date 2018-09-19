@@ -1,29 +1,33 @@
-<?xml version="1.0" encoding="utf-8"?>
+<!-- <?xml version="1.0" encoding="utf-8"?> -->
 
-<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android" id="cordova-plugin-UHF" version="1.0.0">
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android" id="cordova-plugin-uhf" version="1.0.0">
   <name>UHF</name>
-  <js-module name="UHF" src="www/UHF.js">
-    <clobbers target="cordova.plugins.UHF"/>
+  <js-module name="UHF" src="www/uhf.js">
+    <clobbers target="cordova.plugins.uhf"/>
   </js-module>
   <platform name="android">
     <config-file parent="/*" target="res/xml/config.xml">
-      <feature name="UHF">
-        <param name="android-package" value="cordova.plugin.UHF.UHF"/>
+      <feature name="uhf">
+        <param name="android-package" value="cordova.plugin.uhf"/>
       </feature>
     </config-file>
     <config-file parent="/*" target="AndroidManifest.xml"/>
     <!--  -->
-    <source-file src="src/android/libs/SerialPort.jar" target-dir="app/libs/SerialPort.jar"/>
-    <source-file src="src/android/libs/uhfcom13_v14.jar" target-dir="app/libs/uhfcom13_v14.jar"/>
+    <source-file src="src/android/libs/SerialPort.jar" target-dir="libs"/>
+    <source-file src="src/android/libs/uhfcom13_v14.jar" target-dir="libs"/>
     <!--  -->
-    <source-file src="src/android/jniLibs/armeabi/libdevapi.so" target-dir="src/main/jniLibs/armeabi/libdevapi.so"/>
-    <source-file src="src/android/jniLibs/armeabi/libirdaSerialPort.so" target-dir="src/main/jniLibs/armeabi/libirdaSerialPort.so"/>
-    <source-file src="src/android/jniLibs/armeabi/libuhf.so" target-dir="src/main/jniLibs/armeabi/libuhf.so"/>
+    <source-file src="src/android/jniLibs/armeabi/libdevapi.so" target-dir="jniLibs/armeabi"/>
+    <source-file src="src/android/jniLibs/armeabi/libirdaSerialPort.so" target-dir="jniLibs/armeabi"/>
+    <source-file src="src/android/jniLibs/armeabi/libuhf.so" target-dir="jniLibs/armeabi"/>
     <!--  -->
-    <source-file src="src/android/jniLibs/armeabi-v7a/libdevapi.so" target-dir="src/main/jniLibs/armeabi-v7a/libdevapi.so"/>
-    <source-file src="src/android/jniLibs/armeabi-v7a/libirdaSerialPort.so" target-dir="src/main/jniLibs/armeabi-v7a/libirdaSerialPort.so"/>
-    <source-file src="src/android/jniLibs/armeabi-v7a/libuhf.so" target-dir="src/main/jniLibs/armeabi-v7a/libuhf.so"/>
+    <source-file src="src/android/jniLibs/armeabi-v7a/libdevapi.so" target-dir="jniLibs/armeabi-v7a"/>
+    <source-file src="src/android/jniLibs/armeabi-v7a/libirdaSerialPort.so" target-dir="jniLibs/armeabi-v7a"/>
+    <source-file src="src/android/jniLibs/armeabi-v7a/libuhf.so" target-dir="jniLibs/armeabi-v7a"/>
     <!--  -->
-    <source-file src="src/android/UHF.java" target-dir="src/cordova/plugin/UHF/UHF"/>
+    <source-file src="src/android/EPC.java" target-dir="src/cordova/plugin/uhf"/>
+    <source-file src="src/android/UHF.java" target-dir="src/cordova/plugin/uhf"/>
+    <source-file src="src/android/Util.java" target-dir="src/cordova/plugin/uhf"/>
+    <!--  -->
+    <resource-file src="res/raw/msg.mp3" target="res/raw/msg.mp3"/>
   </platform>
 </plugin>

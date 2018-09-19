@@ -1,4 +1,4 @@
-package cordova.plugin.UHF;
+package cordova.plugin.uhf;
 
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CallbackContext;
@@ -6,6 +6,8 @@ import org.apache.cordova.CallbackContext;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import com.android.hdhe.uhf.reader.UhfReader;
 
 /**
  * This class echoes a string called from JavaScript.
