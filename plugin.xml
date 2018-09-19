@@ -28,6 +28,6 @@
     <source-file src="src/android/UHF.java" target-dir="src/cordova/plugin/uhf"/>
     <source-file src="src/android/Util.java" target-dir="src/cordova/plugin/uhf"/>
     <!--  -->
-    <resource-file src="res/raw/msg.mp3" target="res/raw/msg.mp3"/>
+    <resource-file src="res/android/raw/msg.mp3" target="res/raw/msg.mp3"/>
   </platform>
 </plugin>
