@@ -1,8 +1,8 @@
-package com.handheld.UHFDemo;
+package cordova.plugin.uhf;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.handheld.uhfdemo1.R;
+import io.cordova.hellocordova.R;
 
 import android.content.Context;
 import android.media.AudioManager;

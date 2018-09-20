@@ -1,4 +1,4 @@
-package com.handheld.UHFDemo;
+package cordova.plugin.uhf;
 
 public class EPC {
 	private int id;
