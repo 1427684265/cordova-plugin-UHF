@@ -27,7 +27,6 @@ public class UHF extends CordovaPlugin {
             return true;
         }
         if (action.equals("getInstance")) {
-            String message = args.getString(0);
             this.getInstance(callbackContext);
             return true;
         }
