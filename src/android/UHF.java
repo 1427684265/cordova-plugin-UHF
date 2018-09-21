@@ -7,6 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cn.pda.serialport.SerialPort;
@@ -17,7 +18,7 @@ import com.android.hdhe.uhf.reader.UhfReader;
  * This class echoes a string called from JavaScript.
  */
 public class UHF extends CordovaPlugin {
-    private List<UhfReader> managerList;
+    private List<UhfReader> managerList = new ArrayList();
 
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
@@ -27,6 +28,7 @@ public class UHF extends CordovaPlugin {
             return true;
         }
         if (action.equals("getInstance")) {
+            String message = args.getString(0);
             this.getInstance(callbackContext);
             return true;
         }
