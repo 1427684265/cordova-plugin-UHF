@@ -28,7 +28,6 @@ public class UHF extends CordovaPlugin {
             return true;
         }
         if (action.equals("getInstance")) {
-            String message = args.getString(0);
             this.getInstance(callbackContext);
             return true;
         }
@@ -108,12 +107,16 @@ public class UHF extends CordovaPlugin {
     }
 
     private void getInstance(CallbackContext callbackContext) {
-        UhfReader manager = UhfReader.getInstance();
-        if (manager !=  null) {
-            managerList.add(manager);
-            int index = managerList.indexOf(manager);
-            callbackContext.success(index);
-        } else {
+        try{
+            UhfReader manager = UhfReader.getInstance();
+            if (manager !=  null) {
+                managerList.add(manager);
+                int index = managerList.indexOf(manager);
+                callbackContext.success(index);
+            } else {
+                callbackContext.error("error： 无法获取设备");
+            }
+        }catch(Exception e){
             callbackContext.error("error： 无法获取设备");
         }
     }
@@ -141,11 +144,24 @@ public class UHF extends CordovaPlugin {
 
     private void inventoryRealTime(int id, CallbackContext callbackContext) {
         UhfReader manager = managerList.get(id);
-        List<byte[]> epcList = manager.inventoryRealTime();
-        if (epcList != null) {
-            callbackContext.success("success");
-        } else {
-            callbackContext.error("error: failed");
+        try{
+            List<byte[]> epcList = manager.inventoryRealTime();
+            List<String> epcStringList = new ArrayList();
+            JSONObject data = new JSONObject();
+
+            if (epcList != null) {
+                for(byte[] item : epcList){
+                    String epc = Tools.Bytes2HexString(item, item.length);
+                    epcStringList.add(epc);
+                }
+                data.put("message", "扫描成功");
+                data.put("list", epcStringList);
+                callbackContext.success(data);
+            } else {
+                callbackContext.error("error: failed");
+            }
+        }catch(Exception e){
+            callbackContext.error("error： 无法获取设备");
         }
     }
 
