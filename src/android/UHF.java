@@ -1,8 +1,11 @@
 package cordova.plugin.uhf;
 
+import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CallbackContext;
+import android.content.Context;
 
+import org.apache.cordova.CordovaWebView;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -50,12 +53,12 @@ public class UHF extends CordovaPlugin {
         if (action.equals("selectEPC")) {
             int id = args.getInt(0);
             String ecp = args.getString(1);
-            this.selectEPC(id, ecp);
+            this.selectEPC(id, ecp, callbackContext);
             return true;
         }
         if (action.equals("readFrom6C")) {
             int id = args.getInt(0);
-            int memBank = args.getInt(1);
+            String memBank = args.getString(1);
             int startAddress = args.getInt(2);
             int length = args.getInt(3);
             String accessPassword = args.getString(4);
@@ -96,6 +99,12 @@ public class UHF extends CordovaPlugin {
             return true;
         }
         return false;
+    }
+    
+    public void initialize(CordovaInterface cordova, CordovaWebView webView) {
+        super.initialize(cordova, webView);
+        Context context=this.cordova.getActivity().getApplicationContext();
+        Util.initSoundPool(context);
     }
 
     private void test(String message, CallbackContext callbackContext) {
@@ -146,16 +155,17 @@ public class UHF extends CordovaPlugin {
         UhfReader manager = managerList.get(id);
         try{
             List<byte[]> epcList = manager.inventoryRealTime();
-            List<String> epcStringList = new ArrayList();
+            JSONArray epcArray = new JSONArray();
             JSONObject data = new JSONObject();
 
             if (epcList != null) {
                 for(byte[] item : epcList){
                     String epc = Tools.Bytes2HexString(item, item.length);
-                    epcStringList.add(epc);
+                    epcArray.put(epc);
                 }
                 data.put("message", "扫描成功");
-                data.put("list", epcStringList);
+                data.put("list", epcArray);
+                Util.play(1,0);
                 callbackContext.success(data);
             } else {
                 callbackContext.error("error: failed");
@@ -165,14 +175,34 @@ public class UHF extends CordovaPlugin {
         }
     }
 
-    private void  selectEPC (int id, String ecp) {
+    private void  selectEPC (int id, String ecp, CallbackContext callbackContext) {
         UhfReader manager = managerList.get(id);
-        byte[] ecpByte = Tools.HexString2Bytes(ecp);
-        manager.selectEPC(ecpByte);
+        try{
+            byte[] ecpByte = Tools.HexString2Bytes(ecp);
+            manager.selectEPC(ecpByte);
+            callbackContext.success();
+        }catch(Exception e){
+            callbackContext.error("error： 无法选择标签");
+        }
     }
 
-    private void readFrom6C(int id, int memBank, int startAddress, int length, String accessPassword, CallbackContext callbackContext) {
+    private void readFrom6C(int id, String memBankString, int startAddress, int length, String accessPassword, CallbackContext callbackContext) {
         UhfReader manager = managerList.get(id);
+        int memBank = UhfReader.MEMBANK_RESEVER;
+
+        if (memBankString.equalsIgnoreCase("RESEVER")) {
+            memBank = UhfReader.MEMBANK_RESEVER ;
+        }
+        if (memBankString.equalsIgnoreCase("EPC")) {
+            memBank = UhfReader.MEMBANK_EPC ;
+        }
+        if (memBankString.equalsIgnoreCase("TID")) {
+            memBank = UhfReader.MEMBANK_TID ;
+        }
+        if (memBankString.equalsIgnoreCase("USER")) {
+            memBank = UhfReader.MEMBANK_USER ;
+        }
+
         byte[] accessPasswordByte = Tools.HexString2Bytes(accessPassword);
         byte[] tagByte = manager.readFrom6C(memBank, startAddress, length, accessPasswordByte);
 
@@ -181,6 +211,11 @@ public class UHF extends CordovaPlugin {
             callbackContext.success(tag);
         } else {
             callbackContext.error("failed");
+            if (tagByte != null) {
+                callbackContext.error("failed" + (tagByte[0] & 0xff));
+                return;
+            }
+            callbackContext.error("failed: null");
         }
     }
 
@@ -226,5 +261,6 @@ public class UHF extends CordovaPlugin {
     private void close(int id) {
         UhfReader manager = managerList.get(id);
         manager.close();
+        managerList.remove(id);
     }
 }

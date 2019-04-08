@@ -2,7 +2,7 @@ package cordova.plugin.uhf;
 import java.util.HashMap;
 import java.util.Map;
 
-import io.cordova.hellocordova.R;
+import com.pangyuan.pangyuanonline.R;
 
 import android.content.Context;
 import android.media.AudioManager;
