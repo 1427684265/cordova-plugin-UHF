@@ -1,6 +1,7 @@
 <!-- <?xml version="1.0" encoding="utf-8"?> -->
 
-<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android" id="cordova-plugin-uhf" version="1.0.0">
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+  xmlns:android="http://schemas.android.com/apk/res/android" id="cordova-plugin-uhf" version="1.0.0">
   <name>UHF</name>
   <js-module name="uhf" src="www/uhf.js">
     <clobbers target="uhf"/>
@@ -15,6 +16,9 @@
     <!--  -->
     <source-file src="src/android/libs/SerialPort.jar" target-dir="libs"/>
     <source-file src="src/android/libs/uhfcom13_v14.jar" target-dir="libs"/>
+    <source-file src="src/android/libs/uhfr_noserialport_v2.0.jar" target-dir="libs" />
+    <!-- 添加libuhf到 arm64-v8a-->
+    <source-file src="src/android/jniLibs/arm64-v8a/libuhf.so" target-dir="jniLibs/arm64-v8a"/>
     <!--  -->
     <source-file src="src/android/jniLibs/armeabi/libdevapi.so" target-dir="jniLibs/armeabi"/>
     <source-file src="src/android/jniLibs/armeabi/libirdaSerialPort.so" target-dir="jniLibs/armeabi"/>
